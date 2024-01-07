@@ -17,7 +17,7 @@ Process:
 - creates macros for all "_TypeName_" to "**_type_name_t_**"
 - saves the content into _raylib_s.h_
 
-this approach is non-destructive, so you can copy-paste a raylib examples, they will work
+This approach is non-destructive, so you can copy-paste a raylib examples, they will work
 then eventually rewrite it to snake_case and it will work just the same
 there is also no cost added at runtime
 
