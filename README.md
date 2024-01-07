@@ -13,9 +13,9 @@ NOTE: this converter is NOT part of the raylib library (https://www.raylib.com/)
 Process:
 
 - parses raylib.h in the current folder
-- creates macros for all "FunctionName" to "r_function_name"
-- creates macros for all "TypeName" to "type_name_t"
-- saves the content into raylib_s.h
+- creates macros for all "_FunctionName_" to "**_r_function_name_**"
+- creates macros for all "_TypeName_" to "**_type_name_t_**"
+- saves the content into _raylib_s.h_
 
 this approach is non-destructive, so you can copy-paste a raylib examples, they will work
 then eventually rewrite it to snake_case and it will work just the same
