@@ -31,32 +31,41 @@ type_suffix = '_t'
 func_prefix = 'r_'
 do_not_convert = ['bool']
 
-def convert(): 
+
+def convert():
     with open('raylib.h', 'r') as file:
         original_header = file.read()
-    
+
     processed_header = process_header(original_header)
-    
+
     with open('raylib_s.h', 'w') as file:
-            file.write(processed_header)
-    
+        file.write(processed_header)
+
+
 def camel_to_snake(name):
     # First, insert an underscore before a group of uppercase letters followed by lowercase (like 'POT' in 'ImageToPOT')
     name = re.sub(r'([A-Z]+)([A-Z][a-z])', r'\1_\2', name)
     # Next, insert an underscore between lowercase letters and following uppercase letters
-    name = re.sub(r'([a-z])([A-Z])', r'\1_\2', name)
+    name = re.sub(r'([a-z])([A-Z])', r'\1_\2', name)  # Clea_rB_ackground
+    # finally insert an underscore between a lowercased and digits, but it must have more after (e.g. 3D)
+    name = re.sub(r'([a-z])([0-9][A-Z])', r'\1_\2',
+                  name)  # BeginMode3D yes, Vector3 no
+
     # Finally, convert to lowercase
     return name.lower()
-    
+
+
 def process_header(file_content):
     new_content = """#ifndef RAYLIB_S_H\n#define RAYLIB_S_H\n\n#include "raylib.h"\n\n"""
 
     new_content += "// Types\n"
-    
-    # types, either : 
+
+    # types, either :
     #   typedef some ____;
     #   typedef struct ____ {
-    typedef_patterns = [r'typedef\s+.+\s+(\w+)\s*;', r'typedef\s+struct\s+(\w+)\s*\{']
+    typedef_patterns = [
+        r'typedef\s+.+\s+(\w+)\s*;', r'typedef\s+struct\s+(\w+)\s*\{'
+    ]
     for pattern in typedef_patterns:
         types = re.findall(pattern, file_content)
         for type_name in types:
@@ -67,16 +76,19 @@ def process_header(file_content):
             new_content += macro
 
     new_content += "\n// Functions\n"
-    
+
     # functions
-    functions_pattern = re.findall(r'(?:RLAPI|extern)\s+(\w+)\s+([A-Z][a-zA-Z]+)\(([\s\S]+?)\);', file_content)
+    functions_pattern = re.findall(
+        r'(?:RLAPI|extern)\s+(\w+)\s+([A-Z][a-zA-Z0-9]+)\(([\s\S]+?)\);',
+        file_content)
     for return_type, func_name, params in functions_pattern:
         snake_func = func_prefix + camel_to_snake(func_name)
         macro = f'#define {snake_func} {func_name}\n'
         new_content += macro
 
     new_content += """\n#endif // RAYLIB_S_H\n"""
-    
+
     return new_content
+
 
 convert()
