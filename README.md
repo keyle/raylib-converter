@@ -24,6 +24,6 @@ there is also no cost added at runtime
 ### Usage: 
 
 - put this script in the same folder as "raylib.h" 
-- python converter.py # python 3
+- python converter.py (Note: python3)
 - if all goes well, you should have an additional file "raylib_s.h"
 - #include "raylib_s.h" # instead of "raylib.h" but keep it as it's not a replacement
