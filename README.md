@@ -1,4 +1,4 @@
-### snake_case converter for raylib.h
+## snake_case converter for raylib.h
 
 version 1.0, Jan 5 2024
 
@@ -10,7 +10,7 @@ also I found it weird to have uint16_t etc. mixed with Vector2 etc. I don't like
 
 NOTE: this converter is NOT part of the raylib library (https://www.raylib.com/) and is provided "as-is".
 
-Process:
+### Process:
 
 - parses raylib.h in the current folder
 - creates macros for all "_FunctionName_" to "**_r_function_name_**"
@@ -21,7 +21,7 @@ This approach is non-destructive, so you can copy-paste a raylib examples, they 
 then eventually rewrite it to snake_case and it will work just the same
 there is also no cost added at runtime
 
-Usage: 
+### Usage: 
 
 - put this script in the same folder as "raylib.h" 
 - python converter.py # python 3
