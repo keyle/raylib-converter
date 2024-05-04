@@ -1,10 +1,12 @@
 ## snake_case converter for raylib.h
 
 version 1.0, Jan 5 2024
+version 1.1, May 4 2024(!)
 
 (MIT license) - @keyle
 
 This is a converter from raylib's traditional CamelCase to lowercase snake_case.
+
 In C, I prefer the old traditional naming style, it fits better with other libraries, as well as mine(s)
 also I found it weird to have uint16_t etc. mixed with Vector2 etc. I don't like the mish-mash.
 
@@ -16,6 +18,7 @@ NOTE: this converter is NOT part of the raylib library (https://www.raylib.com/)
 - creates macros for all "_FunctionName_" to "**_r_function_name_**"
 - creates macros for all "_TypeName_" to "**_type_name_t_**"
 - saves the content into _raylib_s.h_
+- does the same for raymath.h
 
 This approach is non-destructive, so you can copy-paste a raylib examples, they will work
 then eventually rewrite it to snake_case and it will work just the same
