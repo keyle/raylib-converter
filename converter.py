@@ -95,7 +95,7 @@ def process_header(file_content, file, header_name, func_prefix):
 
     # functions
     functions_pattern = re.findall(
-        r'(?:RLAPI|RMAPI|extern)\s+(\w+)\s+(?:const\s+)?([A-Z][a-zA-Z0-9]+)\(([\s\S]+?)\).*',
+        r'(?:RLAPI|RMAPI|extern)\s+((?:const\s+|unsigned\s+)*[A-Za-z0-9]+\s*[*]*\s+)([A-Z][a-zA-Z0-9]+)\(([\s\S]+?)\).*',
         file_content)
     for return_type, func_name, params in functions_pattern:
         snake_func = func_prefix + camel_to_snake(func_name)
