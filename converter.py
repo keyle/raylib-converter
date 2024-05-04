@@ -39,7 +39,8 @@ def convert():
     with open('raylib.h', 'r') as file:
         original_header = file.read()
 
-    processed_header = process_header(original_header, 'RAYLIB_S_H', 'rl_')
+    processed_header = process_header(original_header, 'raylib.h',
+                                      'RAYLIB_S_H', 'rl_')
 
     with open('raylib_s.h', 'w') as file:
         file.write(processed_header)
@@ -47,7 +48,8 @@ def convert():
     with open('raymath.h', 'r') as file:
         original_header = file.read()
 
-    processed_header = process_header(original_header, 'RAYMATH_S_H', 'rm_')
+    processed_header = process_header(original_header, 'raymath.h',
+                                      'RAYMATH_S_H', 'rm_')
 
     with open('raymath_s.h', 'w') as file:
         file.write(processed_header)
@@ -68,9 +70,9 @@ def camel_to_snake(name):
     return name
 
 
-def process_header(file_content, header_name, func_prefix):
-    new_content = """#ifndef {}\n#define {}\n\n// converted by convertor.py\n// https://github.com/keyle/raylib-converter\n\n#include "raylib.h"\n\n""".format(
-        header_name, header_name)
+def process_header(file_content, file, header_name, func_prefix):
+    new_content = """#ifndef {}\n#define {}\n\n// converted by convertor.py\n// https://github.com/keyle/raylib-converter\n\n#include "{}"\n\n""".format(
+        header_name, header_name, file)
 
     new_content += "// Types\n"
 
@@ -93,7 +95,7 @@ def process_header(file_content, header_name, func_prefix):
 
     # functions
     functions_pattern = re.findall(
-        r'(?:RLAPI|RMAPI|extern)\s+(\w+)\s+([A-Z][a-zA-Z0-9]+)\(([\s\S]+?)\);',
+        r'(?:RLAPI|RMAPI|extern)\s+(\w+)\s+([A-Z][a-zA-Z0-9]+)\(([\s\S]+?)\).*',
         file_content)
     for return_type, func_name, params in functions_pattern:
         snake_func = func_prefix + camel_to_snake(func_name)
