@@ -1,7 +1,7 @@
 ## snake_case converter for raylib.h
 
-version 1.0, Jan 5 2024
-version 1.1, May 4 2024(!)
+- version 1.0, Jan 5 2024
+- version 1.1, May 4 2024(!)
 
 (MIT license) - @keyle
 
